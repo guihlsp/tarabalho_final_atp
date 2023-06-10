@@ -38,14 +38,14 @@ class TrabalhoFinal
     static void exibirOpcoes()
     {
         Console.WriteLine(" \n--------- MENU --------- ");
-        Console.WriteLine("\nDigite 1 para Cadastrar vôos."); //Feito
-        Console.WriteLine("Digite 2 para Cadastrar passageiros."); //Feito
-        Console.WriteLine("Digite 3 para Ver vôos."); //Feito
-        Console.WriteLine("Digite 4 para Ver passageiros.");  //Feito
-        Console.WriteLine("Digite 5 para Alterar um passageiro.");
-        Console.WriteLine("Digite 6 para Excluir passageiro."); //Feito
-        Console.WriteLine("Digite 7 para Alterar um vôo."); //A fazer
-        Console.WriteLine("Digite 8 para Excluir vôo."); // A fazer
+        Console.WriteLine("\nDigite 1 para cadastrar vôos."); //Feito
+        Console.WriteLine("Digite 2 para cadastrar passageiros."); //Feito
+        Console.WriteLine("Digite 3 para ver vôos."); //Feito
+        Console.WriteLine("Digite 4 para ver passageiros.");  //Feito
+        Console.WriteLine("Digite 5 para alterar um passageiro."); //Feito
+        Console.WriteLine("Digite 6 para excluir passageiro."); //Feito
+        Console.WriteLine("Digite 7 para alterar um vôo."); //A fazer
+        Console.WriteLine("Digite 8 para excluir vôo."); // A fazer
         Console.WriteLine("Digite 0 para sair do menu."); // Feito
         Console.Write("\nDigite sua opção:");
         int opcaoEscolhida = 0;
@@ -173,11 +173,11 @@ class TrabalhoFinal
         Console.Clear();
         exibirTitulo("Ver vôos disponiveis");
         Console.WriteLine("\nDigite 1 para ver todos os vôos.");
-        Console.WriteLine("Digite 2 para ver os vôos com mais passageiros."); //atenção
-        Console.WriteLine("Digite 3 para ver os vôos com menos passageiros."); //atenção
-        Console.WriteLine("Digite 4 para ver os vôos com maior distância."); //atenção
-        Console.WriteLine("Digite 5 para ver os vôos com menor distância."); //atenção
-        Console.WriteLine("Digite 6 para ver os vôos com ocupação média dos vôos"); //atenção
+        Console.WriteLine("Digite 2 para ver os vôos com mais passageiros."); //A fazer
+        Console.WriteLine("Digite 3 para ver os vôos com menos passageiros."); //A fazer
+        Console.WriteLine("Digite 4 para ver os vôos com maior distância."); //A fazer
+        Console.WriteLine("Digite 5 para ver os vôos com menor distância."); //A fazer
+        Console.WriteLine("Digite 6 para ver os vôos com ocupação média dos vôos"); //A fazer
         Console.WriteLine("Digite 0 para voltar ao menu.");
         Console.Write("\nDigite sua opção:");
         int opcaoEscolhida = int.Parse(Console.ReadLine()!);
@@ -229,8 +229,6 @@ class TrabalhoFinal
             Console.Clear();
             exibirOpcoes();
         }
-
-        // LUCAS
 
         /*void voosMaisPassageiros(){
 
