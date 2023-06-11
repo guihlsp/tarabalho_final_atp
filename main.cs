@@ -44,8 +44,8 @@ class TrabalhoFinal
         Console.WriteLine("Digite 4 para ver passageiros.");  //Feito
         Console.WriteLine("Digite 5 para alterar um passageiro."); //Feito
         Console.WriteLine("Digite 6 para excluir passageiro."); //Feito
-        Console.WriteLine("Digite 7 para alterar um vôo."); //A fazer
-        Console.WriteLine("Digite 8 para excluir vôo."); // A fazer
+        Console.WriteLine("Digite 7 para alterar um vôo."); //Feito
+        Console.WriteLine("Digite 8 para excluir vôo."); // Feito
         Console.WriteLine("Digite 0 para sair do menu."); // Feito
         Console.Write("\nDigite sua opção:");
         int opcaoEscolhida = 0;
@@ -82,11 +82,11 @@ class TrabalhoFinal
             case 6:
                 deletarPassageiro();
                 break;
-            case 7: //alterarUmVoo();
-                Console.WriteLine($"Sua escolha foi {opcaoEscolhida}");
+            case 7:
+                alteraVoo();
                 break;
-            case 8: // excluirVoo();
-                Console.WriteLine($"Sua escolha foi {opcaoEscolhida}");
+            case 8:
+                deletarVoo();
                 break;
             case 0:
                 Console.WriteLine("Até mais, volte sempre!");
@@ -101,60 +101,115 @@ class TrabalhoFinal
 
     static void addVoo(string[] voo)
     {
-        //criação de um vetor auxiliar para guardar as informações do outro vetor e fazer uma substituição em seguida com a adição de novas informações.
-        string[,] listaVoos_aux = new string[quantidadeVoo + 1, 3];
-        for (int i = 0; i < quantidadeVoo; i++)
+        string[,] listaVoos_aux = new string[quantidadeVoo + 1, 3]; // Criação de um vetor auxiliar para guardar as informações do outro vetor e fazer uma substituição em seguida com a adição de novas informações.
+        for (int i = 0; i < quantidadeVoo; i++) // Copia as informações do vetor original para o vetor auxiliar.
         {
             for (int j = 0; j < 3; j++)
             {
                 listaVoos_aux[i, j] = listaVoos[i, j];
             }
         }
-        for (int j = 0; j < 3; j++)
+        for (int j = 0; j < 3; j++) // Adiciona as informações do novo voo ao final do vetor auxiliar.
         {
             listaVoos_aux[quantidadeVoo, j] = voo[j];
         }
-        listaVoos = new string[quantidadeVoo + 1, 3];
-        quantidadeVoo++;
-        listaVoos = listaVoos_aux;
+        listaVoos = new string[quantidadeVoo + 1, 3]; // Cria um novo vetor para armazenar as informações atualizadas, com um tamanho maior para acomodar o novo voo.
+        quantidadeVoo++; // Incrementa a quantidade de voos.
+        listaVoos = listaVoos_aux; // Substitui o vetor original pelo vetor auxiliar atualizado.
     }
 
     static string[] retornaVoo(int a)
     {
-        string[] retorno = new string[3];
-        //retorna linha
-
-        for (int j = 0; j < 3; j++)
+        string[] retorno = new string[3]; // Cria um novo vetor de strings para armazenar as informações do voo a ser retornado.
+        for (int j = 0; j < 3; j++) // Percorre os elementos da linha 'a' do vetor listaVoos.
         {
-            retorno[j] = listaVoos[a, j];
+            retorno[j] = listaVoos[a, j]; // Atribui cada elemento da linha 'a' do vetor listaVoos ao vetor retorno.
         }
+        return retorno; // Retorna o vetor com as informações do voo.
+    }
 
-        return retorno;
+    static void alteraVoo()
+    {
+        Console.Clear();
+        exibirTitulo("Alterar Voo");
+        Console.Write("Digite o código do vôo que deseja alterar: ");
+        string codVoo = Console.ReadLine()!;
+        int indiceVoo = -1;
+
+        for(int i = 0; i < quantidadeVoo; i++){  // Procurar o vôo com base no código
+            if(codVoo == listaVoos[i, 0]){
+                indiceVoo = i;
+                break;
+            }
+        }
+        if(indiceVoo != -1){
+            Console.WriteLine($"\nVoo encontrado! Código: {listaVoos[indiceVoo, 0]}, Distância: {listaVoos[indiceVoo, 1]} KM, Quantidade de assentos: {listaVoos[indiceVoo, 2]}\n");
+            Console.Write("Digite o novo código do vôo: ");
+            string novoCodigo = Console.ReadLine()!;
+            Console.Write("Digite a nova distância do vôo em KM: ");
+            string novaDistancia = Console.ReadLine()!;
+            Console.Write("Digite a nova quantidade de assentos do vôo: ");
+            string novaQtdAssentos = Console.ReadLine()!;
+            listaVoos[indiceVoo, 0] = novoCodigo; // Atualiza o código do vôo no vetor listaVoos.
+            listaVoos[indiceVoo, 1] = novaDistancia; // Atualiza a distância do vôo no vetor listaVoos.
+            listaVoos[indiceVoo, 2] = novaQtdAssentos; // Atualiza a quantidade de assentos do vôo no vetor listaVoos.
+            Console.WriteLine("\nVôo alterado com sucesso!");
+        }else{
+            Console.WriteLine($"\nNão existe vôo com o código {codVoo} informado!");
+        }
+        Console.WriteLine("\nDigite uma tecla para voltar ao menu principal.");
+        Console.ReadKey();
+        Console.Clear();
+        exibirOpcoes();
     }
 
     static void excluiVoo(int a)
     {
-        //criação de um vetor auxiliar para guardar as informações do outro vetor e fazer uma substituição.
-        string[,] listaVoos_aux = new string[quantidadeVoo - 1, 3];
-        for (int i = 0; i < quantidadeVoo; i++)
+        string[,] listaVoos_aux = new string[quantidadeVoo - 1, 2]; // Cria um novo vetor auxiliar com tamanho reduzido para armazenar os voos restantes após a exclusão.
+        int indiceAuxiliar = 0;
+        for(int i = 0; i < quantidadeVoo; i++) // Percorre todos os voos no vetor listaVoos.
         {
-            if(i < a)
+            if(i != a) // Verifica se o índice atual é diferente do índice do voo a ser excluído.
             {
-                for (int j = 0; j < 3; j++)
+                for(int j = 0; j < 2; j++) // Copia as informações do voo para o vetor auxiliar, exceto o voo a ser excluído.
                 {
-                    listaVoos_aux[i, j] = listaVoos[i, j];
+                    listaVoos_aux[indiceAuxiliar, j] = listaVoos[i, j];
                 }
-            }
-            else if(i > a)
-            {
-                for(int j = 0; j < 3; j++)
-                {
-                    listaVoos_aux[i - 1, j] = listaVoos[i, j];
-                }
+                indiceAuxiliar++;
             }
         }
-        quantidadeVoo--;
-        listaVoos = listaVoos_aux;
+        quantidadeVoo--; // Reduz a quantidade de voos.
+        listaVoos = listaVoos_aux; // Substitui o vetor original pelo vetor auxiliar atualizado.
+    }
+
+    static void deletarVoo()
+    {
+        Console.Clear();
+        exibirTitulo("Excluir Voos");
+        Console.Write("Digite o código do vôo que deseja excluir: ");
+        string codVoo = Console.ReadLine()!;
+        int indiceVoo = -1;
+        for(int i = 0; i < quantidadeVoo; i++) // Percorre todos os voos no vetor listaVoos.
+        {
+            if(codVoo == listaVoos[i, 0]) // Verifica se o código do voo atual corresponde ao código informado pelo usuário.
+            {
+                indiceVoo = i;
+                break;
+            }
+        }
+        if(indiceVoo != -1) // Verifica se o voo foi encontrado com base no código informado.
+        {
+            excluiVoo(indiceVoo); // Chama a função excluiVoo para remover o voo do vetor listaVoos.
+            Console.WriteLine("Voo excluído com sucesso!");
+        }
+        else
+        {
+            Console.WriteLine($"Não existe vôo com o código {codVoo} informado!");
+        }
+        Console.WriteLine("\nDigite uma tecla para voltar ao menu principal.");
+        Console.ReadKey();
+        Console.Clear();
+        exibirOpcoes();
     }
 
     static void listaDosVoos()
@@ -260,11 +315,11 @@ class TrabalhoFinal
         exibirTitulo("Cadastro de vôos");
         Console.Write("Digite o codigo do vôo:");
         string codigoVoo = Console.ReadLine()!;
-        Console.Write("Digite a distância do vôo:");
+        Console.Write("Digite a distância do vôo em KM:");
         string distanciaVoo = Console.ReadLine()!;
-        Console.Write("Digite a quantidades de assentos desse Vôo:");
+        Console.Write("Digite a quantidade de assentos desse vôo:");
         string assentosVoo = Console.ReadLine()!;
-        addVoo(new string[3] { codigoVoo, distanciaVoo, assentosVoo });
+        addVoo(new string[3] { codigoVoo, distanciaVoo, assentosVoo }); // Chama a função addVoo para cadastrar o vôo com as informações fornecidas.
         Console.WriteLine($"O vôo de codigo {codigoVoo} foi cadastrado com sucesso!");
         //Thread.Sleep(3000); //faz o carregamento de alguns segundos
         Console.Clear();
