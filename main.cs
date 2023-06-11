@@ -38,22 +38,21 @@ class TrabalhoFinal
     static void exibirOpcoes()
     {
         Console.WriteLine(" \n--------- MENU --------- ");
-        Console.WriteLine("\nDigite 1 para cadastrar vôos."); //Feito
-        Console.WriteLine("Digite 2 para cadastrar passageiros."); //Feito
-        Console.WriteLine("Digite 3 para ver vôos."); //Feito
-        Console.WriteLine("Digite 4 para ver passageiros.");  //Feito
-        Console.WriteLine("Digite 5 para alterar um passageiro."); //Feito
-        Console.WriteLine("Digite 6 para excluir passageiro."); //Feito
-        Console.WriteLine("Digite 7 para alterar um vôo."); //Feito
-        Console.WriteLine("Digite 8 para excluir vôo."); // Feito
-        Console.WriteLine("Digite 0 para sair do menu."); // Feito
-        Console.Write("\nDigite sua opção:");
+        Console.WriteLine("\nDigite 1 para cadastrar vôos.");
+        Console.WriteLine("Digite 2 para cadastrar passageiros.");
+        Console.WriteLine("Digite 3 para ver vôos.");
+        Console.WriteLine("Digite 4 para ver passageiros."); 
+        Console.WriteLine("Digite 5 para alterar um passageiro.");
+        Console.WriteLine("Digite 6 para excluir passageiro.");
+        Console.WriteLine("Digite 7 para alterar um vôo.");
+        Console.WriteLine("Digite 8 para excluir vôo.");
+        Console.WriteLine("Digite 0 para sair do menu.");
         int opcaoEscolhida = 0;
         bool entradaValida = false;
 
         while (!entradaValida)
         {
-            Console.Write("Digite sua opção: ");
+            Console.WriteLine("\nDigite sua opção:");
             string entrada = Console.ReadLine();
 
             if (int.TryParse(entrada, out opcaoEscolhida)){
@@ -228,34 +227,33 @@ class TrabalhoFinal
         Console.Clear();
         exibirTitulo("Ver vôos disponiveis");
         Console.WriteLine("\nDigite 1 para ver todos os vôos.");
-        Console.WriteLine("Digite 2 para ver os vôos com mais passageiros."); //A fazer
-        Console.WriteLine("Digite 3 para ver os vôos com menos passageiros."); //A fazer
-        Console.WriteLine("Digite 4 para ver os vôos com maior distância."); //A fazer
-        Console.WriteLine("Digite 5 para ver os vôos com menor distância."); //A fazer
-        Console.WriteLine("Digite 6 para ver os vôos com ocupação média dos vôos"); //A fazer
+        Console.WriteLine("Digite 2 para ver os vôos com mais passageiros.");
+        Console.WriteLine("Digite 3 para ver os vôos com menos passageiros.");
+        Console.WriteLine("Digite 4 para ver os vôos com maior distância.");
+        Console.WriteLine("Digite 5 para ver os vôos com menor distância.");
+        Console.WriteLine("Digite 6 para ver os vôos com ocupação média dos vôos");
         Console.WriteLine("Digite 0 para voltar ao menu.");
-        Console.Write("\nDigite sua opção:");
+        Console.WriteLine("\nDigite sua opção:");
         int opcaoEscolhida = int.Parse(Console.ReadLine()!);
         switch (opcaoEscolhida)
         {
             case 1:
                 verVoos();
-                //Console.WriteLine($"Sua escolha foi {opcaoEscolhida}");
                 break;
             case 2: //voosMaisPassageiros();
-                Console.WriteLine($"Sua escolha foi {opcaoEscolhida}");
+                voosMaisPassageiros();
                 break;
             case 3: //voosMenosPassageiros();
-                Console.WriteLine($"Sua escolha foi {opcaoEscolhida}");
+                voosMenosPassageiros();
                 break;
             case 4: //voosMaiorDistancia();
-                Console.WriteLine($"Sua escolha foi {opcaoEscolhida}");
+                voosMaiorDistancia();
                 break;
             case 5: // voosMenorDistancia()
-                Console.WriteLine($"Sua escolha foi {opcaoEscolhida}");
+                voosMenorDistancia();
                 break;
             case 6: //ocupacaoMediaVoos()
-                Console.WriteLine($"Sua escolha foi {opcaoEscolhida}");
+                ocupacaoMediaVoos();
                 break;
             case 0:
                 Console.Clear();
@@ -285,28 +283,143 @@ class TrabalhoFinal
             exibirOpcoes();
         }
 
-        //LUCAS 
-
-        /*void voosMaisPassageiros(){
-
+        void voosMaisPassageiros(){
+            Console.Clear();
+            exibirTitulo("Vôos com mais passageiros");
+            // Encontra o número máximo de passageiros entre todos os voos
+            int maxPassageiros = 0;
+            for (int i = 0; i < quantidadeVoo; i++) // Loop para percorrer todos os voos
+            {
+                int passageiros = int.Parse(listaVoos[i, 2]); // Obtém o número de passageiros do voo atual
+                if (passageiros > maxPassageiros) // Verifica se o número de passageiros é maior que o máximo atual
+                {
+                    maxPassageiros = passageiros; // Atualiza o número máximo de passageiros
+                }
+            }
+            // Exibe os voos com o número máximo de passageiros
+            for (int i = 0; i < quantidadeVoo; i++) // Loop para percorrer todos os voos novamente
+            {
+                int passageiros = int.Parse(listaVoos[i, 2]); // Obtém o número de passageiros do voo atual
+                if (passageiros == maxPassageiros) // Verifica se o número de passageiros é igual ao máximo encontrado 
+                {
+                    Console.WriteLine($"Vôo: {listaVoos[i, 0]}"); // Exibe o número do voo 
+                    Console.WriteLine($"Distância: {listaVoos[i, 1]}km"); // Exibe a distância do voo 
+                    Console.WriteLine($"Passageiros: {listaVoos[i, 2]}\n"); // Exibe o número de passageiros do voo 
+                }
+            }
+            Console.WriteLine("\nDigite uma tecla para voltar ao menu principal"); 
+            Console.ReadKey(); // Aguarda o usuário pressionar uma tecla antes de continuar 
+            Console.Clear(); // Limpa a tela do console 
+            exibirOpcoes(); // Chama a função "exibirOpcoes()" para exibir o menu de opções novamente
+            //Seguirá o mesmo padrão nos demais códigos
         }
 
-
-        void voosMenosPassageiros(){
-            
+        void voosMenosPassageiros(){ 
+            Console.Clear(); 
+            exibirTitulo("Vôos com menos passageiros"); 
+            // Encontra o número mínimo de passageiros entre todos os voos 
+            int minPassageiros = int.MaxValue; // Variável para armazenar o número mínimo de passageiros 
+            for (int i = 0; i < quantidadeVoo; i++) // Loop para percorrer todos os voos 
+            {
+                int passageiros = int.Parse(listaVoos[i, 2]); // Obtém o número de passageiros do voo atual 
+                if (passageiros < minPassageiros) // Verifica se o número de passageiros é menor que o mínimo atual 
+                {
+                    minPassageiros = passageiros; // Atualiza o número mínimo de passageiros 
+                }
+            } 
+            // Exibe os voos com o número mínimo de passageiros 
+            for (int i = 0; i < quantidadeVoo; i++) // Loop para percorrer todos os voos novamente 
+            { 
+                int passageiros = int.Parse(listaVoos[i, 2]); // Obtém o número de passageiros do voo atual 
+                if (passageiros == minPassageiros) // Verifica se o número de passageiros é igual ao mínimo encontrado 
+                { 
+                    Console.WriteLine($"Vôo: {listaVoos[i, 0]}"); // Exibe o número do voo 
+                    Console.WriteLine($"Distância: {listaVoos[i, 1]}km"); // Exibe a distância do voo 
+                    Console.WriteLine($"Passageiros: {listaVoos[i, 2]}\n"); // Exibe o número de passageiros do voo 
+                } 
+            } 
+            Console.WriteLine("\nDigite uma tecla para voltar ao menu principal"); 
+            Console.ReadKey();  
+            Console.Clear(); 
+            exibirOpcoes(); 
         }
 
-         void voosMaiorDistancia(){
-            
+        void voosMaiorDistancia(){ 
+            Console.Clear(); 
+            exibirTitulo("Vôos com maior distância");
+            // Encontra a distância máxima entre os voos
+            int maxDistancia = 0; // Variável para armazenar a distância máxima
+            for (int i = 0; i < quantidadeVoo; i++) // Loop para percorrer todos os voos 
+            { 
+                int distancia = int.Parse(listaVoos[i, 1]); // Obtem a distância do voo atual 
+                if (distancia > maxDistancia) // Verifica se a distância é maior que a máxima atual 
+                {
+                    maxDistancia = distancia; // Atualiza a distância máxima 
+                } 
+            } 
+            // Exibe os voos com a distância máxima 
+            for (int i = 0; i < quantidadeVoo; i++) // Loop para percorrer todos os voos novamente 
+            { 
+                int distancia = int.Parse(listaVoos[i, 1]); // Obtém a distância do voo atual 
+                if (distancia == maxDistancia) // Verifica se a distância é igual à máxima encontrada 
+                { 
+                    Console.WriteLine($"Vôo: {listaVoos[i, 0]}"); // Exibe o número do voo 
+                    Console.WriteLine($"Distância: {listaVoos[i, 1]}km"); // Exibe a distância do voo 
+                    Console.WriteLine($"Passageiros: {listaVoos[i, 2]}\n"); // Exibe o número de passageiros do voo 
+                }
+            } 
+            Console.WriteLine("\nDigite uma tecla para voltar ao menu principal"); 
+            Console.ReadKey(); 
+            Console.Clear(); 
+            exibirOpcoes(); 
         }
 
-        void voosMenorDistancia(){
-            
+        void voosMenorDistancia(){ 
+            Console.Clear(); 
+            exibirTitulo("Vôos com menor distância"); 
+            // Encontra a distância mínima entre todos os voos 
+            int minDistancia = int.MaxValue; // Variável para armazenar a distância mínima 
+            for (int i = 0; i < quantidadeVoo; i++) // Loop para percorrer todos os voos 
+            { 
+                int distancia = int.Parse(listaVoos[i, 1]); // Obtém a distância do voo atual 
+                if (distancia < minDistancia) // Verifica se a distância é menor que a mínima atual 
+                { 
+                    minDistancia = distancia; // Atualiza a distância mínima 
+                } 
+            } 
+            // Exibe os voos com a distância mínima 
+            for (int i = 0; i < quantidadeVoo; i++) // Loop para percorrer todos os voos novamente 
+            {
+                int distancia = int.Parse(listaVoos[i, 1]); // Obtém a distância do voo atual 
+                if (distancia == minDistancia) // Verifica se a distância é igual à mínima encontrada 
+                {
+                    Console.WriteLine($"Vôo: {listaVoos[i, 0]}"); // Exibe o número do voo 
+                    Console.WriteLine($"Distância: {listaVoos[i, 1]}km"); // Exibe a distância do voo
+                    Console.WriteLine($"Passageiros: {listaVoos[i, 2]}\n"); // Exibe o número de passageiros do voo
+                }
+            }
+            Console.WriteLine("\nDigite uma tecla para voltar ao menu principal");
+            Console.ReadKey();
+            Console.Clear();
+            exibirOpcoes();
         }
 
         void ocupacaoMediaVoos(){
-            
-        }*/
+            Console.Clear();
+            exibirTitulo("Ocupação média dos vôos");
+            int totalPassageiros = 0; // Variável para armazenar o total de passageiros de todos os voos
+            // Loop que percorre os voos e calcula o total de passageiros
+            for (int i = 0; i < quantidadeVoo; i++)
+            {
+                totalPassageiros += int.Parse(listaVoos[i, 2]); // Adiciona a quantidade de passageiros do voo atual ao totalPassageiros
+            }
+            double mediaOcupacao = (double)totalPassageiros / quantidadeVoo; // Calcula a média de ocupação dos voos
+            Console.WriteLine($"Ocupação média dos vôos: {mediaOcupacao:N2} passageiros"); 
+            Console.WriteLine("\nDigite uma tecla para voltar ao menu principal"); 
+            Console.ReadKey(); 
+            Console.Clear();
+            exibirOpcoes();
+    }
     }
 
     static void cadastrarVoos()
@@ -437,7 +550,7 @@ class TrabalhoFinal
         Console.WriteLine("\nDigite 1 para ver um passageiro específico.");
         Console.WriteLine("Digite 2 para ver todos os passageiros desse vôo.");
         Console.WriteLine("Digite 0 para voltar ao menu principal.");
-        Console.Write("\nDigite sua opção:");
+        Console.WriteLine("\nDigite sua opção:");
         int opcaoEscolhida = int.Parse(Console.ReadLine()!);
         switch (opcaoEscolhida)
         {
