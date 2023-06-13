@@ -6,7 +6,7 @@ class TrabalhoFinal
     //criação da matriz que recebe as informaçôes para cadastro de um voo
     static string[,] listaVoos = new string[1, 3]; //codigo = [0], distancia = [1], assentos = [2]
     static int quantidadeVoo = 0;
-    static string[,] listaPassageiros = new string[1, 2]; //codigoPassageiro = [0], nome = [1],
+    static string[,] listaPassageiros = new string[1, 3]; //codigoPassageiro = [0], nome = [1], codigoVoo = [2]
     static int quantidadePassageiro = 0;
     static void exibirMensagem()
     {
@@ -442,34 +442,34 @@ class TrabalhoFinal
         static void adicionaPassageiro(string[] passageiro)
     {
         // Criação de um vetor auxiliar para guardar as informações do outro vetor e fazer uma substituição em seguida com a adição de novas informações.
-        string[,] listaPassageiros_aux = new string[quantidadePassageiro + 1, 2];
+        string[,] listaPassageiros_aux = new string[quantidadePassageiro + 1, 3];
 
         // Copia os valores do vetor original para o vetor auxiliar
         for (int i = 0; i < quantidadePassageiro; i++)
         {
-            for (int j = 0; j < 2; j++)
+            for (int j = 0; j < 3; j++)
             {
                 listaPassageiros_aux[i, j] = listaPassageiros[i, j];
             }
         }
 
         // Adiciona as informações do novo passageiro ao vetor auxiliar
-        for (int j = 0; j < 2; j++)
+        for (int j = 0; j < 3; j++)
         {
             listaPassageiros_aux[quantidadePassageiro, j] = passageiro[j];
         }
 
-        listaPassageiros = new string[quantidadePassageiro + 1, 2]; // Cria um novo vetor com tamanho atualizado
+        listaPassageiros = new string[quantidadePassageiro + 1, 3]; // Cria um novo vetor com tamanho atualizado
         quantidadePassageiro++; // Incrementa a quantidade de passageiros
         listaPassageiros = listaPassageiros_aux; // Substitui o vetor original pelo vetor auxiliar atualizado
     }
 
     static string[] retornaPassageiro(int a)
     {
-        string[] ret = new string[2];
+        string[] ret = new string[3];
 
         // Retorna os valores da linha do vetor de passageiros
-        for (int j = 0; j < 2; j++)
+        for (int j = 0; j < 3; j++)
         {
             ret[j] = listaPassageiros[a, j];
         }
@@ -498,14 +498,17 @@ class TrabalhoFinal
         if (indicePassageiro != -1)
         {
             Console.WriteLine(
-                $"\nPassageiro encontrado! Código: {listaPassageiros[indicePassageiro, 0]}, Nome: {listaPassageiros[indicePassageiro, 1]}\n"
+                $"\nPassageiro encontrado! Código: {listaPassageiros[indicePassageiro, 0]}, Nome: {listaPassageiros[indicePassageiro, 1]}, Código do vôo: {listaPassageiros[indicePassageiro, 2]}\n"
             );
             Console.Write("Digite o novo código do passageiro: ");
             string novoCodigo = Console.ReadLine()!;
             Console.Write("Digite o novo nome do passageiro: ");
             string novoNome = Console.ReadLine()!;
+            Console.Write("Digite o novo vôo do passageiro: ");
+            string novoVoo = Console.ReadLine()!;
             listaPassageiros[indicePassageiro, 0] = novoCodigo;
             listaPassageiros[indicePassageiro, 1] = novoNome;
+            listaPassageiros[indicePassageiro, 1] = novoVoo;
             Console.WriteLine("\nPassageiro alterado com sucesso!");
         }
         else
@@ -579,7 +582,8 @@ class TrabalhoFinal
         for (int i = 0; i < quantidadePassageiro; i++)
         {
             Console.WriteLine($"Código: {listaPassageiros[i, 0]}");
-            Console.WriteLine($"Nome: {listaPassageiros[i, 1]}\n");
+            Console.WriteLine($"Nome: {listaPassageiros[i, 1]}");
+            Console.WriteLine($"Vôo: {listaPassageiros[i, 2]}\n");
         }
     }
 
@@ -588,7 +592,8 @@ class TrabalhoFinal
         Console.Clear();
         exibirTitulo("Ver Passageiros");
         Console.WriteLine("\nDigite 1 para ver um passageiro específico.");
-        Console.WriteLine("Digite 2 para ver todos os passageiros desse vôo.");
+        Console.WriteLine("Digite 2 para ver todos os passageiros cadastrados.");
+        Console.WriteLine("Digite 3 para ver todos os passageiros de um vôo específico.");
         Console.WriteLine("Digite 0 para voltar ao menu principal.");
         Console.Write("\nDigite sua opção:");
         int opcaoEscolhida = int.Parse(Console.ReadLine()!);
@@ -599,6 +604,9 @@ class TrabalhoFinal
                 break;
             case 2:
                 verTodosOsPassageiros();
+                break;
+            case 3:
+                verPassageirosDeUmVoo();
                 break;
             case 0:
                 Console.Clear();
@@ -626,6 +634,54 @@ class TrabalhoFinal
         {
             exibirTitulo("Exibição de todos os passageiros registrados.");
             ListaDosPassageiros();
+        }
+        Console.WriteLine("\nDigite uma tecla para voltar ao menu principal.");
+        //faz com que qualquer tecla que for digitada faça ir para o menu
+        Console.ReadKey();
+        Console.Clear();
+        exibirOpcoes();
+    }
+
+    static void verPassageirosDeUmVoo()
+    {
+        Console.Clear();
+        if (quantidadePassageiro == 0)
+        {
+            Console.WriteLine("Não há passageiros cadastrados.");
+        }
+        else
+        {
+            exibirTitulo("Exibição de passageiros por vôo.");
+            Console.Write("Digite o código do vôo que deseja pesquisar: ");
+            string codVoo = Console.ReadLine();
+
+            bool passageiroEncontrado = false;
+
+            // Procura o passageiro com base no código do vôo
+            for (int i = 0; i < quantidadePassageiro; i++)
+            {
+                if (codVoo == listaPassageiros[i, 2])
+                {
+                    // Se o código do vôo do passageiro for igual ao código especificado,
+                    // imprime o nome dos passageiros correspondentes ao código encontrado
+                    Console.WriteLine($"\nOs passageiros vinculados ao vôo {codVoo} são:\n");
+                    for (int j = 0; j < quantidadePassageiro; j++)
+                    {
+                        if (listaPassageiros[j, 2] == codVoo)
+                        {
+                            Console.WriteLine($"Código: {listaPassageiros[j, 0]}");
+                            Console.WriteLine($"Nome: {listaPassageiros[j, 1]}\n");
+                        }
+                    }
+                    passageiroEncontrado = true;
+                    break; // Interrompe o loop, pois o passageiro foi encontrado
+                }
+            }
+            if (!passageiroEncontrado)
+            {
+                // Se nenhum passageiro for encontrado, exibe uma mensagem informando
+                Console.WriteLine($"Não existe nenhum passageiro vinculado ao vôo {codVoo}!");
+            }
         }
         Console.WriteLine("\nDigite uma tecla para voltar ao menu principal.");
         //faz com que qualquer tecla que for digitada faça ir para o menu
@@ -682,9 +738,11 @@ class TrabalhoFinal
         string codigoPassageiro = Console.ReadLine()!;
         Console.Write("Digite o nome do passageiro:");
         string nomePassageiro = Console.ReadLine()!;
-        adicionaPassageiro(new string[2] { codigoPassageiro, nomePassageiro });
+        Console.Write("Digite o código do vôo do passageiro:");
+        string codigoVoo = Console.ReadLine()!;
+        adicionaPassageiro(new string[3] { codigoPassageiro, nomePassageiro, codigoVoo });
         Console.WriteLine(
-            $"O passageiro(a) {nomePassageiro} de codigo {codigoPassageiro} foi cadastrado com sucesso!"
+            $"O passageiro(a) {nomePassageiro} de codigo {codigoPassageiro} foi cadastrado com sucesso e vinculado ao vôo {codigoVoo}!"
         );
         Console.Clear();
         exibirOpcoes();
