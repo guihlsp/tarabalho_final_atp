@@ -730,23 +730,50 @@ class TrabalhoFinal
         exibirOpcoes();
     }
 
-    static void cadastroPassageiros()
+static void cadastroPassageiros()
+{
+    Console.Clear();
+    exibirTitulo("Cadastro De Passageiros");
+
+    string codigoPassageiro = "";
+    bool codigoExistente = true;
+
+    while (codigoExistente)
     {
-        Console.Clear();
-        exibirTitulo("Cadastro De Passageiros");
-        Console.Write("Digite o codigo do passageiro:");
-        string codigoPassageiro = Console.ReadLine()!;
-        Console.Write("Digite o nome do passageiro:");
-        string nomePassageiro = Console.ReadLine()!;
-        Console.Write("Digite o código do vôo do passageiro:");
-        string codigoVoo = Console.ReadLine()!;
-        adicionaPassageiro(new string[3] { codigoPassageiro, nomePassageiro, codigoVoo });
-        Console.WriteLine(
-            $"O passageiro(a) {nomePassageiro} de codigo {codigoPassageiro} foi cadastrado com sucesso e vinculado ao vôo {codigoVoo}!"
-        );
-        Console.Clear();
-        exibirOpcoes();
+        Console.Write("Digite o código do passageiro:");
+        codigoPassageiro = Console.ReadLine()!;
+
+        codigoExistente = false;
+
+        // Verificar se o código já existe na matriz
+        for (int i = 0; i < listaPassageiros.GetLength(0); i++)
+        {
+            string codigoExistentePassageiro = listaPassageiros[i, 0];
+            if (codigoExistentePassageiro == codigoPassageiro)
+            {
+                codigoExistente = true;
+                Console.WriteLine("Já existe um passageiro com o código informado!");
+                break;
+            }
+        }
     }
+
+    string nomePassageiro, codigoVoo;
+
+    Console.Write("Digite o nome do passageiro:");
+    nomePassageiro = Console.ReadLine()!;
+    Console.Write("Digite o código do vôo do passageiro:");
+    codigoVoo = Console.ReadLine()!;
+
+    adicionaPassageiro(new string[3] { codigoPassageiro, nomePassageiro, codigoVoo });
+
+    Console.WriteLine(
+        $"O passageiro(a) {nomePassageiro} de código {codigoPassageiro} foi cadastrado com sucesso e vinculado ao vôo {codigoVoo}!"
+    );
+
+    Console.Clear();
+    exibirOpcoes();
+}
 
         static void exibirTitulo(string titulo){
             int quantidadeDeLetras = titulo.Length;
