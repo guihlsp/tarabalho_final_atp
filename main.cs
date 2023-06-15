@@ -423,21 +423,44 @@ class TrabalhoFinal
     }
 
     static void cadastrarVoos()
+{
+    Console.Clear();
+    exibirTitulo("Cadastro de vôos");
+
+    string codigoVoo = "";
+    bool codigoExistente = true;
+
+    while (codigoExistente)
     {
-        Console.Clear();
-        exibirTitulo("Cadastro de vôos");
-        Console.Write("Digite o codigo do vôo:");
-        string codigoVoo = Console.ReadLine()!;
-        Console.Write("Digite a distância do vôo em KM:");
-        string distanciaVoo = Console.ReadLine()!;
-        Console.Write("Digite a quantidade de assentos desse vôo:");
-        string assentosVoo = Console.ReadLine()!;
-        addVoo(new string[3] { codigoVoo, distanciaVoo, assentosVoo }); // Chama a função addVoo para cadastrar o vôo com as informações fornecidas.
-        Console.WriteLine($"O vôo de codigo {codigoVoo} foi cadastrado com sucesso!");
-        //Thread.Sleep(3000); //faz o carregamento de alguns segundos
-        Console.Clear();
-        exibirOpcoes();
+        Console.Write("Digite o código do vôo:");
+        codigoVoo = Console.ReadLine()!;
+
+        codigoExistente = false;
+
+        // Verificar se o código já existe na matriz
+        for (int i = 0; i < listaVoos.GetLength(0); i++)
+        {
+            string codigoExistenteVoo = listaVoos[i, 0];
+            if (codigoExistenteVoo == codigoVoo)
+            {
+                codigoExistente = true;
+                Console.WriteLine("Já existe um vôo com o código informado!");
+                break;
+            }
+        }
     }
+
+    Console.Write("Digite a distância do vôo em KM:");
+    string distanciaVoo = Console.ReadLine()!;
+    Console.Write("Digite a quantidade de assentos desse vôo:");
+    string assentosVoo = Console.ReadLine()!;
+    addVoo(new string[3] { codigoVoo, distanciaVoo, assentosVoo });
+
+    Console.WriteLine($"O vôo de código {codigoVoo} foi cadastrado com sucesso!");
+
+    Console.Clear();
+    exibirOpcoes();
+}
 
         static void adicionaPassageiro(string[] passageiro)
     {
